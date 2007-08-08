@@ -1,8 +1,6 @@
-# Allison RDoc template
-# Copyright 2006 Cloudburst LLC
 
 class String
-  # fuck this stupid rdoc templater system
+  # Works around the non-evaling templater by wrapping a string with conditional tags.
   def if_exists (item = nil)
     unless item
       self unless self =~ /(%(\w+)%)/
@@ -11,12 +9,14 @@ class String
       "\nIF:#{item}\n#{self}\nENDIF:#{item}\n"
     end
   end
+  
+  # Wraps a string in a loop tag.
   def loop(item)
     "\nSTART:#{item}\n#{self}\nEND:#{item}\n"
   end
 end
 
-module RDoc
+module RDoc #:nodoc:
   module Page
 
     puts "Invoking Allison template..."
@@ -33,7 +33,7 @@ module RDoc
       module Allison
         # markaby page says markaby is better in its own module...
   
-        URL = "http://blog.evanweaver.com/articles/2006/06/02/allison"      
+        URL = 'http://blog.evanweaver.com/pages/code#allison'
         IMGPATH = 'allison.gif'
       
         FONTS = METHOD_LIST = SRC_PAGE = FILE_PAGE = CLASS_PAGE = ""
@@ -42,7 +42,7 @@ module RDoc
         
         STYLE, JAVASCRIPT = ["css", "js"].map do |extension|
           s = File.open(File.dirname(__FILE__) + "/allison.#{extension}").read
-          # programmatic css, because we're so badass
+          # scary programmatic css
           if extension == "css"
             puts "Compiling CSS..."
             s_lines = s.split("\n")
@@ -268,8 +268,11 @@ module RDoc
 
     Allison.constants.each do |c| 
       eval "#{c} = Allison::#{c}" # jump out of the namespace
-      File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
-        f.puts eval(c) # write cache
+      begin
+        File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
+          f.puts eval(c) # write cache
+        end
+      rescue Errno::EACCES        
       end
     end     
     
