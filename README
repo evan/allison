@@ -51,5 +51,6 @@ The template value should be the full path to the <tt>allison.rb</tt> file, minu
 
 == Further resources
 
-* http://blog.evanweaver.com/pages/code#allison
 * http://rubyforge.org/forum/forum.php?forum_id=16451
+* http://blog.evanweaver.com/articles/2006/11/15/allison-released
+* http://blog.evanweaver.com/articles/2006/11/12/allison-an-rdoc-template
