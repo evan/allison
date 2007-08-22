@@ -49,8 +49,11 @@ If you want to generate documentation for Rails itself, there is a handy trick. 
 
 The template value should be the full path to the <tt>allison.rb</tt> file, minus the <tt>.rb</tt> (contrary to the Rake task).
 
-== Further resources
+== Reporting problems
 
 * http://rubyforge.org/forum/forum.php?forum_id=16451
+
+== Further resources
+
 * http://blog.evanweaver.com/articles/2006/11/15/allison-released
 * http://blog.evanweaver.com/articles/2006/11/12/allison-an-rdoc-template
