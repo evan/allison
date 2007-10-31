@@ -1,6 +1,5 @@
 
 require 'rubygems'
-gem 'echoe', '>=2.3'
 require 'echoe'
 
 Echoe.new('allison') do |p|
@@ -10,5 +9,4 @@ Echoe.new('allison') do |p|
   p.url = 'http://blog.evanweaver.com/pages/code#allison'
   p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
   p.rdoc_pattern = /\.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
-  p.need_gem = false
 end
