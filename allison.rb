@@ -1,6 +1,6 @@
 
 class String
-  # Works around the non-evaling templater by wrapping a string with conditional tags.
+  # RDoc workarounds
   def if_exists (item = nil)
     unless item
       self unless self =~ /(%(\w+)%)/
@@ -9,20 +9,19 @@ class String
       "\nIF:#{item}\n#{self}\nENDIF:#{item}\n"
     end
   end
-  
-  # Wraps a string in a loop tag.
   def loop(item)
     "\nSTART:#{item}\n#{self}\nEND:#{item}\n"
   end
 end
 
-module RDoc #:nodoc:
+module RDoc
   module Page
 
     puts "Invoking Allison template..."
 
     require 'pathname'
     CACHE_DIR = Pathname.new(__FILE__).dirname.to_s + "/cache"
+    Dir.mkdir(CACHE_DIR) unless File.exist?(CACHE_DIR)
 
     begin
       require 'rubygems'
@@ -31,18 +30,19 @@ module RDoc #:nodoc:
       require 'base64'
 
       module Allison
-        # markaby page says markaby is better in its own module...
+        # Markaby page says Markaby is better in its own module...
+        
+        PROJECT = `pwd`.split("/").reverse.detect {|dir| dir !~ /trunk/ }
+        
+        puts "In project #{PROJECT.capitalize}"
   
-        URL = 'http://blog.evanweaver.com/pages/code#allison'
-        IMGPATH = 'allison.gif'
-      
         FONTS = METHOD_LIST = SRC_PAGE = FILE_PAGE = CLASS_PAGE = ""
               
-        FR_INDEX_BODY = "!INCLUDE!" # who knows
+        FR_INDEX_BODY = "!INCLUDE!" # Who knows
         
         STYLE, JAVASCRIPT = ["css", "js"].map do |extension|
           s = File.open(File.dirname(__FILE__) + "/allison.#{extension}").read
-          # scary programmatic css
+          # Programmatic CSS
           if extension == "css"
             puts "Compiling CSS..."
             s_lines = s.split("\n")
@@ -51,17 +51,14 @@ module RDoc #:nodoc:
               line = line.squeeze(" ").strip
               if line =~ /(\w+)/ and meths.include? $1
                 line = instance_eval line
-                #puts "Called method #{$1}"
+                # puts "Called method #{$1}"
               elsif line !~ /\*\/|\/\*/ and line =~ /(@.*|^def (\w+).*)/ 
-                #printf "Evalled #{$1}"
+                # printf "Evalled #{$1}"
                 result = instance_eval $1
-                #puts " to #{result.inspect}"
+                # puts " to #{result.inspect}"
                 result = (result.is_a?(Fixnum) ? result.to_s + "px" : result.to_s)
                 line = (line == $1 ? "" : line.gsub($1, result))
                 meths.push $2 if $2
-              elsif line =~ /\%#{IMGPATH}\%/
-                img = Base64.encode64(File.open(File.dirname(__FILE__) + "/#{IMGPATH}") {|f| f.read}).gsub("\n", '')
-                line.sub!(/\%#{IMGPATH}\%/, img)
               end
               line !~ /^\s*$|\s*^\/\*.*\*\/\s*$|\{|\}/ ? line + ";" : line
               end
@@ -82,7 +79,7 @@ module RDoc #:nodoc:
           end
           body do
             div.container! do
-              10.times {|n| div('', :class => "curve", :id => "preheader_curve_#{n}") }
+              6.times {|n| div('', :class => "curve", :id => "preheader_curve_#{n}") }
               div.header! do
                 span.title! do
                   p { '&nbsp;' }
@@ -116,23 +113,23 @@ module RDoc #:nodoc:
           end
           body do 
             div.container! do
-              10.times {|n| div('', :class => "curve", :id => "preheader_curve_#{n}") }
+              6.times {|n| div('', :class => "curve", :id => "preheader_curve_#{n}") }
               div.header! do
                 p {'%full_path%'.if_exists}
                 span do
                   h1.title! '%title%'.if_exists
                 end
-                self << "!INCLUDE!" # always empty
+                self << "!INCLUDE!" # Always empty
               end
               div.clear {}
               div.left! do
-                self << (div.navigation.dark.top.child_of! do 
-                  # death to you, horrible templater >:(
+                self << (div.navigation.darker.top.child_of! do 
+                  # Ugh
                   h3 "Child of" 
                   self << "<span>\n#{"<a href='%par_url%'>".if_exists}%parent%#{"</a>".if_exists('par_url')}</span>"
                 end).if_exists('parent')
                 
-                self << div.navigation.dark.top.defined_in! do 
+                self << div.navigation.darker.top.defined_in! do 
                   h3('Defined in')
                   self << a('%full_path%', :href => '%full_path_url%').if_exists.loop('infiles')
                 end.if_exists('infiles')
@@ -140,15 +137,15 @@ module RDoc #:nodoc:
                 ['includes', 'requires', 'methods'].each do |item|
                   self << div.navigation.top(:id => item) do
                     self << h3(item.capitalize)
-                    self << "<span class='bpink'>\n#{"<a href='%aref%'>".if_exists}%name%#{br}#{"</a>".if_exists('aref')}</span>".if_exists('name').loop(item)
+                    self << "#{"<a href='%aref%'>".if_exists}%name%#{br}#{"</a>".if_exists('aref')}".if_exists('name').loop(item)
                   end.if_exists(item)
                 end 
                 
                 div.spacer! ''
                 
-                # for the javascript ajaxy includes
+                # For the local AJAX includes
                 ['class', 'file', 'method'].each do |item|
-                  div.navigation.dark.index :id => "#{item}_wrapper" do
+                  div.navigation.darker.index :id => "#{item}_wrapper" do
                    div.list_header do
                      h3 'All ' + (item == 'class' ? 'classes' : item + 's')
                    end                 
@@ -168,18 +165,18 @@ module RDoc #:nodoc:
                    end
                   end
                 end
-                
-              10.times {|n| div('', :class => "curve", :id => "left_curve_#{n}") }
               end            
               
               div.content! do
+
                 self << capture do
                   h1.item_name! '%title%'
-                end.if_exists('title')
+                end.if_exists('title')                                
                 
                 self << capture do
-                  h1 'Description'
-                  self << '%description%'
+                  div.description! do
+                    '%description%'
+                  end
                 end.if_exists('description')
   
                 self << capture do
@@ -196,10 +193,9 @@ module RDoc #:nodoc:
                       h1(item.capitalize)
                       p do
                         table do
-                          fields = %w[name value old_name new_name rw desc a_desc]
+                          fields = %w[name value old_name new_name rw]
                           self << tr do
-                            # header row
-                            th.first " " 
+                            # Header row
                             if item == 'constants'
                               th 'Name'
                               th 'Value'
@@ -210,11 +206,9 @@ module RDoc #:nodoc:
                               th 'Name'
                               th 'Read/write?'
                             end
-                            th.description(:colspan => 2){"Description"}
                           end
                           self << tr do
-                            # looped item rows
-                            td.first " " 
+                            # Looped item rows
                             fields.each do |field|
                               if field !~ /desc/ 
                                 self << td('%' + field + '%', :class => field =~ /^old|^name/ ? "highlight" : "normal").if_exists
@@ -229,25 +223,22 @@ module RDoc #:nodoc:
                   end
   
                   self << capture do
-                    div.section_spacer ''
-                    h1('%type% %category% methods')   
+                    h1('%type% %category% Methods')   
                     self << capture do
                       self << a.small(:name => '%aref%') {br}.if_exists
-                      div.a_method do
-                        div do
-                          h3 { "<a href='#%aref%'>".if_exists + '%callseq%'.if_exists + '%name%'.if_exists + '%params%'.if_exists + "</a>".if_exists('aref')}
-                          self << '%m_desc%'.if_exists
-  
-                          self << capture do
-                           p.source_link :id => '%aref%-show-link' do
-                             a "Show source...", :id => '%aref%-link', :href => "#", 
-                                           :onclick=> "toggle('%aref%-source'); toggleText('%aref%-link'); return false;"
-                           end
-                           div.source :id => '%aref%-source' do
-                                pre { '%sourcecode%' }
-                             end
-                           end.if_exists('sourcecode')
+                      div.method_block do
+                        h3 { "<a href='#%aref%'>".if_exists + '%callseq%'.if_exists + '%name%'.if_exists + '%params%'.if_exists + "</a>".if_exists('aref')}
+                        self << '%m_desc%'.if_exists
+
+                        self << capture do
+                          p.source_link :id => '%aref%-show-link' do
+                            a "Show source...", :id => '%aref%-link', :href => "#", 
+                               :onclick=> "toggle('%aref%-source'); toggleText('%aref%-link'); return false;"
                           end
+                          div.source :id => '%aref%-source' do
+                              pre { '%sourcecode%' }
+                            end
+                          end.if_exists('sourcecode')
                         end
   
                     end.loop('methods').if_exists('methods')             
@@ -256,28 +247,29 @@ module RDoc #:nodoc:
                 end.loop('sections').if_exists('sections')
                 
               end            
-            end
   
-            div.footer!.clear do
-               a 'Allison', :href => URL
-            end
-  
-          end
+              div.footer!.clear do 
+                self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
+                self << " / Allison 3"
+              end
+            end                          
+            
+            self << '<script src="http://feeds.feedburner.com/~s/snax" type="text/javascript" charset="utf-8"></script>'
+            
+          end          
+                
         end.to_s                 
       end
 
     Allison.constants.each do |c| 
-      eval "#{c} = Allison::#{c}" # jump out of the namespace
-      begin
-        File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
-          f.puts eval(c) # write cache
-        end
-      rescue Errno::EACCES        
+      eval "#{c} = Allison::#{c}" # Jump out of the namespace
+      File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
+        f.puts eval(c) # Write cache
       end
     end     
     
     rescue LoadError => e
-      # guess we don't have some dependency. hope the cache is fresh!
+      # We don't have some dependency
       lib = (e.to_s[/(.*)\(/, 1] or e.to_s).split(" ").last.capitalize
       puts "Loading from cache (#{lib} was missing)..."
       Dir[CACHE_DIR + '/*'].each do |filename|
