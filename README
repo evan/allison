@@ -33,9 +33,9 @@ You can set up a Rake task if you want. First, find the path to your local machi
         files = ['README', 'LICENSE', 'CHANGELOG', 
                  'lib/**/*.rb', 'doc/**/*.rdoc', 'test/*.rb']
         rdoc.rdoc_files.add(files)
-        rdoc.main = "README"
-        rdoc.title = "My RDoc"
-        rdoc.template = "/path/to/gems/allison-2.0/lib/allison"
+        rdoc.main = 'README'
+        rdoc.title = 'My RDoc'
+        rdoc.template = '/path/to/gems/allison-2.0/lib/allison'
         rdoc.rdoc_dir = 'doc'
         rdoc.options << '--line-numbers' << '--inline-source'
   end
@@ -48,7 +48,7 @@ http://blog.evanweaver.com/files/allison_release.png
 
 == Generating documentation for Rails
 
-If you want to generate documentation for Rails itself, there is a handy trick. Rails’ RDoc tasks obey the <tt>template</tt> environment variable. For instance, to document ActiveRecord with Allison, run:
+If you want to generate documentation for Ruby on Rails, there is a handy trick. Rails’ RDoc tasks obey the <tt>template</tt> environment variable. For instance, to document ActiveRecord, run:
 
   cd vendor/rails/activerecord/
   template=`allison --path` rake rerdoc
