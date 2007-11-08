@@ -9,8 +9,6 @@ Copyright 2007 Cloudburst, LLC. See included LICENSE file.
 
 The public certificate for this gem is at http://rubyforge.org/frs/download.php/25331/evan_weaver-original-public_cert.pem.
 
-= Usage
-
 == Installation
 
   sudo gem install allison
@@ -23,6 +21,8 @@ To use the template, just run <tt>allison</tt> with your normal RDoc options. Fo
   
 Note that some options like <tt>--one-file</tt> and <tt>--diagram</tt> might not work well.
 
+= Extras
+
 == Rake task
 
 You can set up a Rake task if you want. First, find the path to your local machine's template by running <tt>allison --path</tt>. Then add something like the following to your <tt>Rakefile</tt>:
@@ -30,7 +30,8 @@ You can set up a Rake task if you want. First, find the path to your local machi
   require 'rake/rdoctask'
   
   Rake::RDocTask.new do |rdoc|
-        files = ['README', 'LICENSE', 'CHANGELOG', 'lib/**/*.rb', 'doc/**/*.rdoc', 'test/*.rb']
+        files = ['README', 'LICENSE', 'CHANGELOG', 
+                 'lib/**/*.rb', 'doc/**/*.rdoc', 'test/*.rb']
         rdoc.rdoc_files.add(files)
         rdoc.main = "README"
         rdoc.title = "My RDoc"
@@ -41,11 +42,9 @@ You can set up a Rake task if you want. First, find the path to your local machi
   
 Now you can run <tt>rake rdoc</tt> to invoke the task. 
 
-= Extras
-
 == Sample
 
-http://blog.evanweaver.com/files/allison_release.gif
+http://blog.evanweaver.com/files/allison_release.png
 
 == Generating documentation for Rails
 
