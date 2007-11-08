@@ -257,7 +257,6 @@ module RDoc
         end.to_s                 
       end
 
-    warned = false
     Allison.constants.each do |c| 
       eval "#{c} = Allison::#{c}" # Jump out of the namespace
       begin
@@ -265,8 +264,6 @@ module RDoc
           f.puts eval(c) # Write cache
         end
       rescue Errno::EACCES => e
-        puts "Couldn't update cache (#{e.class})" unless warned
-        warned = true
       end
     end     
     
