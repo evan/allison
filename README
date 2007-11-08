@@ -40,7 +40,7 @@ You can set up a Rake task if you want. First, find the path to your local machi
         rdoc.options << '--line-numbers' << '--inline-source'
   end
   
-Now you can run <tt>rake rdoc</tt> to invoke the task. 
+Now you can run <tt>rake rdoc</tt> to invoke the task. Also, some versions of RDoc require <tt>.rb</tt> to be appended to the template path.
 
 == Sample
 
