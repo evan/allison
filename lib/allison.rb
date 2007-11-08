@@ -1,6 +1,6 @@
 
+# RDoc workarounds
 class String
-  # RDoc workarounds
   def if_exists (item = nil)
     unless item
       self unless self =~ /(%(\w+)%)/
@@ -17,10 +17,10 @@ end
 module RDoc
   module Page
 
-    puts "Invoking Allison template..."
+    puts "Allison 2.0 template (c) 2007 Cloudburst, LLC"
 
     require 'pathname'
-    CACHE_DIR = Pathname.new(__FILE__).dirname.to_s + "/cache"
+    CACHE_DIR = File.expand_path(File.dirname(__FILE__) + "/../cache")
     Dir.mkdir(CACHE_DIR) unless File.exist?(CACHE_DIR)
 
     begin
@@ -29,13 +29,11 @@ module RDoc
       require 'markaby'
       require 'base64'
 
+      # Markaby page says Markaby is better in its own module
       module Allison
-        # Markaby page says Markaby is better in its own module...
         
         PROJECT = `pwd`.split("/").reverse.detect {|dir| dir !~ /trunk/ }
         
-        puts "In project #{PROJECT.capitalize}"
-  
         FONTS = METHOD_LIST = SRC_PAGE = FILE_PAGE = CLASS_PAGE = ""
               
         FR_INDEX_BODY = "!INCLUDE!" # Who knows
@@ -44,7 +42,6 @@ module RDoc
           s = File.open(File.dirname(__FILE__) + "/allison.#{extension}").read
           # Programmatic CSS
           if extension == "css"
-            puts "Compiling CSS..."
             s_lines = s.split("\n")
             meths = []
             s_lines.collect! do |line|
@@ -64,13 +61,11 @@ module RDoc
               end
             s = s_lines.join("\n")
           else
-            puts "Inlining Javascript..."
+            # Do nothing; the Javascript is already fine
           end
           s
         end      
     
-        puts "Compiling XHTML..."
-        
         INDEX = Markaby::Builder.new.xhtml_strict do
           head do
             title '%title%'
@@ -250,7 +245,7 @@ module RDoc
   
               div.footer!.clear do 
                 self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
-                self << " / Allison 3 &copy; 2007 "
+                self << " / Allison 2 &copy; 2007 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
             end                          
@@ -262,17 +257,23 @@ module RDoc
         end.to_s                 
       end
 
+    warned = false
     Allison.constants.each do |c| 
       eval "#{c} = Allison::#{c}" # Jump out of the namespace
-      File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
-        f.puts eval(c) # Write cache
+      begin
+        File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
+          f.puts eval(c) # Write cache
+        end
+      rescue Errno::EACCES => e
+        puts "Couldn't update cache (#{e.class})" unless warned
+        warned = true
       end
     end     
     
     rescue LoadError => e
       # We don't have some dependency
       lib = (e.to_s[/(.*)\(/, 1] or e.to_s).split(" ").last.capitalize
-      puts "Loading from cache (#{lib} was missing)..."
+      puts "Using cache (couldn't load '#{lib}')"
       Dir[CACHE_DIR + '/*'].each do |filename|
         eval("#{filename.split("/").last} = File.open(filename) {|s| s.read}")
       end

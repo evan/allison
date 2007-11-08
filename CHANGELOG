@@ -1,12 +1,12 @@
 
-v3.0. Blue branch visual redesign becomes trunk.
+v2.0. Blue branch visual redesign becomes trunk.
 
-v2.3. RDoc.
+v1.5. RDoc.
 
-v2.2. Again.
+v1.4. Again.
 
-v2.1. Hack to make gem versioning work.
+v1.3. Hack to make gem versioning work.
 
-v2. Caching in order to remove Markaby dependency.
+v1.2. Caching in order to remove Markaby dependency.
 
 v1. First release.

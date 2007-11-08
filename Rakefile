@@ -9,4 +9,8 @@ Echoe.new('allison') do |p|
   p.url = 'http://blog.evanweaver.com/pages/code#allison'
   p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
   p.rdoc_pattern = /\.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
+  p.clean_pattern = /^doc|^pkg/
+  p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
 end
+
+task :"cache/BODY" => [:clean, :doc] # Rebuild the cache before packaging
