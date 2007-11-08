@@ -17,7 +17,7 @@ end
 module RDoc
   module Page
 
-    puts "Allison 2.0 template (c) 2007 Cloudburst, LLC"
+    puts "Allison 2 template (c) 2007 Cloudburst, LLC"
 
     require 'pathname'
     CACHE_DIR = File.expand_path(File.dirname(__FILE__) + "/../cache")
