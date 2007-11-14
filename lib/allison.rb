@@ -32,8 +32,6 @@ module RDoc
       # Markaby page says Markaby is better in its own module
       module Allison
         
-        PROJECT = `pwd`.split("/").reverse.detect {|dir| dir !~ /trunk/ }
-        
         FONTS = METHOD_LIST = SRC_PAGE = FILE_PAGE = CLASS_PAGE = ""
               
         FR_INDEX_BODY = "!INCLUDE!" # Who knows
