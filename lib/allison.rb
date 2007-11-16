@@ -246,10 +246,7 @@ module RDoc
                 self << " / Allison 2 &copy; 2007 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
-            end                          
-            
-            self << '<script src="http://feeds.feedburner.com/~s/snax" type="text/javascript" charset="utf-8"></script>'
-            
+            end                                      
           end          
                 
         end.to_s                 
