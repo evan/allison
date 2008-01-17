@@ -1,13 +1,12 @@
-
 Allison
 
 A modern, pretty RDoc template.
 
 == License
 
-Copyright 2007 Cloudburst, LLC. See included LICENSE file.
+Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file. 
 
-The public certificate for this gem is at http://rubyforge.org/frs/download.php/25331/evan_weaver-original-public_cert.pem.
+The public certificate for the gem is here[link:http://rubyforge.org/frs/download.php/25331/evan_weaver-original-public_cert.pem]. If you like this software, please {make a donation to charity}[http://blog.evanweaver.com/donate/], or {recommend Evan}[http://www.workingwithrails.com/person/7739-evan-weaver] at Working with Rails.
 
 == Installation
 
@@ -55,7 +54,7 @@ If you want to generate documentation for Ruby on Rails, there is a handy trick.
 
 == Reporting problems
 
-* http://rubyforge.org/forum/forum.php?forum_id=16451
+The support forum is here[http://rubyforge.org/forum/forum.php?forum_id=16451].
 
 Patches and contributions are very welcome. Please note that contributors are required to assign copyright for their additions to Cloudburst, LLC.
 
