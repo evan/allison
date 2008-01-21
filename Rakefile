@@ -10,7 +10,9 @@ Echoe.new('allison') do |p|
   p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
   p.rdoc_pattern = /\.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
   p.clean_pattern = /^doc|^pkg/
-  p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
+  if ARGV.include? "release"
+    p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
+  end
 end
 
 task :"cache/BODY" => [:clean, :doc] # Rebuild the cache before packaging
