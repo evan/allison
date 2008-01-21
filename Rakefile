@@ -11,6 +11,7 @@ Echoe.new('allison') do |p|
   p.rdoc_pattern = /allison.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
   p.clean_pattern = /^doc|^pkg/
   if ARGV.include? "release"
+    STDERR.puts "Using non-gem template"
     p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
   end
 end
