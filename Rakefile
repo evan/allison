@@ -8,7 +8,7 @@ Echoe.new('allison') do |p|
   p.summary = 'A modern, pretty RDoc template.'
   p.url = 'http://blog.evanweaver.com/pages/code#allison'
   p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
-  p.rdoc_pattern = /\.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
+  p.rdoc_pattern = /allison.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
   p.clean_pattern = /^doc|^pkg/
   if ARGV.include? "release"
     p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
