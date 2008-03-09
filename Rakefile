@@ -10,8 +10,8 @@ Echoe.new('allison') do |p|
   p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
   p.rdoc_pattern = /allison.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
   p.clean_pattern = /^doc|^pkg/
-  if ARGV.include? "release" or ARGV.include? "publish_doc"
-    STDERR.puts "Using non-gem template"
+  if ARGV.include? "release" or ARGV.include? "doc"
+    STDERR.puts "Using local template"
     p.rdoc_template = File.expand_path(File.dirname(__FILE__) + "/lib/allison")
   end
 end

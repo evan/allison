@@ -17,7 +17,7 @@ end
 module RDoc
   module Page
 
-    puts "Allison 2 template (c) 2007 Cloudburst, LLC"
+    puts "Allison 2 template (c) 2007-2008 Cloudburst, LLC"
 
     require 'pathname'
     CACHE_DIR = File.expand_path(File.dirname(__FILE__) + "/../cache")
@@ -243,7 +243,7 @@ module RDoc
   
               div.footer!.clear do 
                 self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
-                self << " / Allison 2 &copy; 2007 "
+                self << " / Allison 2 &copy; 2007-2008 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
             end                                      
