@@ -1,0 +1,233 @@
+
+/*;
+Allison 2 template;
+Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file.;
+*/;
+
+/* default styles */
+
+* {
+margin: 0;
+padding: 0;
+border: none;
+}
+
+.clear {
+clear: both;
+}
+
+a {
+color: #304878;
+font-weight: bold;
+text-decoration: none;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+html, body {
+color: #000;
+font-size: 10px;
+font-family: helvetica, verdana, sans;
+background-color: #fff;
+text-align: center;
+margin: 0;
+padding: 0;
+}
+
+p, ul, ol {
+
+} li {
+margin: 3px;
+_margin-left: 40px;
+} p, pre, table, ol, ul {
+margin: 16px;
+} #item_name {
+
+}
+
+h1 {
+font-size: 22px;
+
+} h2, h3 {
+font-size: 18px;
+margin: 6px;
+margin-right: 0;
+padding-top: 12px;
+}
+
+/* center everything */
+
+#container {
+margin: 20px auto 0 auto;
+text-align: left;
+}
+
+/* header stuff */
+
+#header {
+	display:none;
+} .curve {
+	display:none;
+}
+
+
+/* basic layout and navigation bars */
+
+#left {
+	display:none;
+}
+
+
+/* content area */
+
+#content {
+padding: 20px;
+float: left;
+min-height: 450px;
+margin: 0;
+margin-bottom: -4px;
+} #content img {
+padding-top: 6px;
+padding-bottom: 12px;
+}
+
+#content h1, h2 {
+border-top: 1px solid #e4ebed;
+} #content h1 {
+padding-top: 18px;
+} #content #item_name { /* why does this need to be fully qualified? */
+padding-top: 0;
+border: none;
+}
+
+/* footer */
+
+#footer {
+	display:none;
+}
+
+/* for that dumb redirect index page I can't avoid */
+
+#redirect {
+text-align: center;
+} #redirect a {
+color: #181848;
+}
+
+/* tables */
+
+table {
+margin-right: 0;
+border-collapse: collapse;
+border: 1px solid #e4ebed;
+} td, th {
+background-color: #fff;
+text-align: left;
+font-size: 10px;
+} td.normal {
+font-family: Courier, Courier New, monospace;
+font-size: 10px;
+} td.highlight {
+color: #304878;
+}
+
+/* method_block details */
+
+div.method_block {
+border-bottom: 1px solid #e4ebed;
+margin-left: 20px;
+margin-bottom: -17px;
+
+} div.method_block h3 {
+color: #181848;
+margin-left: 0;
+padding: 0;
+} #content div.method_block h1, #content #description h1 {
+margin-left: 6px;
+color: #ccd5dc;
+} div.method_block a.small { /* where is this used? */
+font-size: 3px;
+
+}
+
+/* index includes on the navigation bar */
+
+div.index a {
+font-size: 10px;
+} #method {
+display: none;
+} #file, #class {
+display: block;
+} div.list_header {
+float: left;
+} div.list_header_link {
+float: right;
+padding-top: 3px;
+} div.list_header_link a {
+font-weight: normal;
+} div.navigation h3, .list_header_link {
+margin: 0;
+
+margin-bottom: 6px;
+padding: 0;
+}
+
+.index label {
+font-size: 10px;
+} .index form input {
+width: 136px;
+} .index form {
+margin-bottom: 6px;
+}
+
+ol, ul {
+margin-left: 6px;
+}
+
+p.source_link a {
+text-align: right;
+font-weight: normal;
+display: none;
+} div.source {
+display: block;
+} pre, tt {
+color: #181848;
+font-weight: normal;
+font-family: Courier, Courier New, monospace;
+font-size: 12px;
+} pre {
+
+margin-left: 12px;
+overflow: hidden;
+text-overflow:ellipsis;
+/* next 4 lines because IE sucks */
+_position: relative;
+_overflow-x:scroll;
+_overflow-y:visible;
+} b tt, tt b {
+font-weight: bold;
+} div.source g {
+margin-left: 0;
+} p.source_link {
+text-align: center;
+}
+
+/* source code highlighting */
+
+.source pre {
+color: black;
+}
+pre .ruby-value, pre .ruby-symbol {
+color: #1104bb;
+} pre .ruby-value.str, pre .ruby-node {
+color: #181848;
+} pre .ruby-ivar, pre .ruby-cvar {
+} pre .ruby-comment {
+color: #009500;
+} pre .ruby-constant {
+color: #cd8802;
+} pre .ruby-keyword {
+color: #8d04aa;
+}

@@ -17,7 +17,7 @@ end
 module RDoc
   module Page
 
-    puts "Allison 2 template (c) 2007-2008 Cloudburst, LLC"
+    puts "Allison 2 template (c) 2007-2009 Cloudburst, LLC"
 
     require 'pathname'
     CACHE_DIR = File.expand_path(File.dirname(__FILE__) + "/../cache")
@@ -68,6 +68,7 @@ module RDoc
           head do
             title '%title%'
             link :rel => 'stylesheet', :type => 'text/css', :href => 'rdoc-style.css', :media => 'screen'
+            link :rel => 'stylesheet', :type => 'text/css', :href => 'rdoc-style.cssprint.css', :media => 'print'
             tag! :meta, 'http-equiv' => 'refresh', 'content' => '0;url=%initial_page%'
           end
           body do
@@ -100,6 +101,7 @@ module RDoc
           head do
             title "%title%"
             link :rel => 'stylesheet', :type => 'text/css', :href => '%style_url%', :media => 'screen'
+            link :rel => 'stylesheet', :type => 'text/css', :href => '%style_url%print.css', :media => 'print'
             script :type => 'text/javascript' do
               JAVASCRIPT
             end
@@ -243,7 +245,7 @@ module RDoc
   
               div.footer!.clear do 
                 self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
-                self << " / Allison 2 &copy; 2007-2008 "
+                self << " / Allison 2 &copy; 2007-2009 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
             end                                      
