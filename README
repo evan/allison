@@ -6,7 +6,7 @@ A modern, pretty RDoc template.
 
 Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file. 
 
-The public certificate for this gem is here[http://rubyforge.org/frs/download.php/25331/evan_weaver-original-public_cert.pem]. 
+The public certificate for this gem is here[http://blog.evanweaver.com/files/evan_weaver-original-public_cert.pem]. 
 
 If you use this software, please {make a donation}[http://blog.evanweaver.com/donate/], or {recommend Evan}[http://www.workingwithrails.com/person/7739-evan-weaver] at Working with Rails.
 
@@ -56,7 +56,7 @@ If you want to generate documentation for Ruby on Rails, there is a handy trick.
 
 == Reporting problems
 
-The support forum is here[http://rubyforge.org/forum/forum.php?forum_id=16451].
+The support forum is here[http://github.com/fauna/allison/issues].
 
 Patches and contributions are very welcome. Please note that contributors are required to assign copyright for their additions to Cloudburst, LLC.
 
