@@ -2,11 +2,15 @@ Allison
 
 A modern, pretty RDoc template.
 
+== DEPRECATED
+
+No replacement.
+
 == License
 
-Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file. 
+Copyright 2007, 2008 Cloudburst, LLC. Licensed under the AFL 3. See the included LICENSE file.
 
-The public certificate for this gem is here[http://blog.evanweaver.com/files/evan_weaver-original-public_cert.pem]. 
+The public certificate for this gem is here[http://blog.evanweaver.com/files/evan_weaver-original-public_cert.pem].
 
 If you use this software, please {make a donation}[http://blog.evanweaver.com/donate/], or {recommend Evan}[http://www.workingwithrails.com/person/7739-evan-weaver] at Working with Rails.
 
@@ -15,11 +19,11 @@ If you use this software, please {make a donation}[http://blog.evanweaver.com/do
   sudo gem install allison
 
 == Usage
-  
+
 To use the template, just run <tt>allison</tt> with your normal RDoc options. For example:
 
   $ allison --title 'My RDoc' --line-numbers --main README --promiscuous *
-  
+
 Note that some options like <tt>--one-file</tt> and <tt>--diagram</tt> might not work well.
 
 = Extras
@@ -27,11 +31,11 @@ Note that some options like <tt>--one-file</tt> and <tt>--diagram</tt> might not
 == Rake task
 
 You can set up a Rake task if you want. First, find the path to your local machine's template by running <tt>allison ----path</tt>. Then add something like the following to your <tt>Rakefile</tt>:
-    
+
   require 'rake/rdoctask'
-  
+
   Rake::RDocTask.new do |rdoc|
-        files = ['README', 'LICENSE', 'CHANGELOG', 
+        files = ['README', 'LICENSE', 'CHANGELOG',
                  'lib/**/*.rb', 'doc/**/*.rdoc', 'test/*.rb']
         rdoc.rdoc_files.add(files)
         rdoc.main = 'README'
@@ -40,7 +44,7 @@ You can set up a Rake task if you want. First, find the path to your local machi
         rdoc.rdoc_dir = 'doc'
         rdoc.options << '--line-numbers' << '--inline-source'
   end
-  
+
 Now you can run <tt>rake rdoc</tt> to invoke the task. Also, some versions of RDoc require <tt>.rb</tt> to be appended to the template path.
 
 == Sample
