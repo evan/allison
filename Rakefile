@@ -7,7 +7,7 @@ Echoe.new('allison') do |p|
   p.author = 'Evan Weaver'
   p.summary = 'A modern, pretty RDoc template.'
   p.url = 'http://blog.evanweaver.com/pages/code#allison'
-  p.docs_host = 'blog.evanweaver.com:~/www/bax/public/files/doc/'
+  p.docs_host = 'evan.github.com/fauna/'
   p.rdoc_pattern = /allison.rb|^README|^CHANGELOG|^TODO|^LICENSE$/
   p.clean_pattern = /^doc|^pkg/
   if ARGV.include? "release" or ARGV.include? "doc"
