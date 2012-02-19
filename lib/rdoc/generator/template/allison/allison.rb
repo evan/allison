@@ -20,22 +20,21 @@ module RDoc
     puts "Allison 2 template (c) 2007-2009 Cloudburst, LLC"
 
     require 'pathname'
-    CACHE_DIR = File.expand_path(File.dirname(__FILE__) + "/../cache")
-    Dir.mkdir(CACHE_DIR) unless File.exist?(CACHE_DIR)
+    CACHE_DIR = File.expand_path(File.dirname(__FILE__))
 
     begin
       require 'rubygems'
-      gem 'markaby', '>= 0.5'  
+      gem 'markaby', '>= 0.5'
       require 'markaby'
       require 'base64'
 
       # Markaby page says Markaby is better in its own module
       module Allison
-        
+
         FONTS = METHOD_LIST = SRC_PAGE = FILE_PAGE = CLASS_PAGE = ""
-              
+
         FR_INDEX_BODY = "!INCLUDE!" # Who knows
-        
+
         STYLE, JAVASCRIPT = ["css", "js"].map do |extension|
           s = File.open(File.dirname(__FILE__) + "/allison.#{extension}").read
           # Programmatic CSS
@@ -47,7 +46,7 @@ module RDoc
               if line =~ /(\w+)/ and meths.include? $1
                 line = instance_eval line
                 # puts "Called method #{$1}"
-              elsif line !~ /\*\/|\/\*/ and line =~ /(@.*|^def (\w+).*)/ 
+              elsif line !~ /\*\/|\/\*/ and line =~ /(@.*|^def (\w+).*)/
                 # printf "Evalled #{$1}"
                 result = instance_eval $1
                 # puts " to #{result.inspect}"
@@ -62,8 +61,8 @@ module RDoc
             # Do nothing; the Javascript is already fine
           end
           s
-        end      
-    
+        end
+
         INDEX = Markaby::Builder.new.xhtml_strict do
           head do
             title '%title%'
@@ -89,14 +88,14 @@ module RDoc
             end
           end
         end.to_s
-        
-        FILE_INDEX = METHOD_INDEX = CLASS_INDEX = Markaby::Builder.new.capture do 
+
+        FILE_INDEX = METHOD_INDEX = CLASS_INDEX = Markaby::Builder.new.capture do
           a :href => '%href%' do
             self << '%name%'
             br
           end
         end.loop('entries')
-                
+
         BODY = Markaby::Builder.new.xhtml_strict do
           head do
             title "%title%"
@@ -106,7 +105,7 @@ module RDoc
               JAVASCRIPT
             end
           end
-          body do 
+          body do
             div.container! do
               6.times {|n| div('', :class => "curve", :id => "preheader_curve_#{n}") }
               div.header! do
@@ -118,71 +117,71 @@ module RDoc
               end
               div.clear {}
               div.left! do
-                self << (div.navigation.darker.top.child_of! do 
+                self << (div.navigation.darker.top.child_of! do
                   # Ugh
-                  h3 "Child of" 
+                  h3 "Child of"
                   self << "<span>\n#{"<a href='%par_url%'>".if_exists}%parent%#{"</a>".if_exists('par_url')}</span>"
                 end).if_exists('parent')
-                
-                self << div.navigation.darker.top.defined_in! do 
+
+                self << div.navigation.darker.top.defined_in! do
                   h3('Defined in')
                   self << a('%full_path%', :href => '%full_path_url%').if_exists.loop('infiles')
                 end.if_exists('infiles')
-                
+
                 ['includes', 'requires', 'methods'].each do |item|
                   self << div.navigation.top(:id => item) do
                     self << h3(item.capitalize)
                     self << "#{"<a href='%aref%'>".if_exists}%name%#{br}#{"</a>".if_exists('aref')}".if_exists('name').loop(item)
                   end.if_exists(item)
-                end 
-                
+                end
+
                 div.spacer! ''
-                
+
                 # For the local AJAX includes
                 ['class', 'file', 'method'].each do |item|
                   div.navigation.darker.index :id => "#{item}_wrapper" do
                    div.list_header do
                      h3 'All ' + (item == 'class' ? 'classes' : item + 's')
-                   end                 
+                   end
                    div.list_header_link do
-                     a((item == 'method' ? 'Show...' : 'Hide...'), 
-                        :id => "#{item}_link", :href => "#", 
+                     a((item == 'method' ? 'Show...' : 'Hide...'),
+                        :id => "#{item}_link", :href => "#",
                         :onclick=> "toggle('#{item}'); toggleText('#{item}_link'); return false;")
                    end
                    div.clear {}
                    div(:id => item) do
                      form do
                        label(:for => "filter_#{item}") { 'Filter:' + '&nbsp;' * 2 }
-                       input '', :type => 'text', :id => "filter_#{item}", 
+                       input '', :type => 'text', :id => "filter_#{item}",
                                    :onKeyUp => "return filterList('#{item}', this.value, event);",
                                    :onKeyPress => "return disableSubmit(event);"
                      end
                    end
                   end
                 end
-              end            
-              
+              end
+
               div.content! do
 
                 self << capture do
                   h1.item_name! '%title%'
-                end.if_exists('title')                                
-                
+                end.if_exists('title')
+
                 self << capture do
                   div.description! do
                     '%description%'
                   end
                 end.if_exists('description')
-  
+
                 self << capture do
                   self << h1 {a '%sectitle%', :name => '%secsequence%'}.if_exists('sectitle')
                   self << p {'%seccomment%'}.if_exists
-    
+
                   self << capture do
                     h1 "Child modules and classes"
                     p '%classlist%'
                   end.if_exists('classlist')
-  
+
                   ['constants', 'aliases', 'attributes'].each do |item|
                     self << capture do
                       h1(item.capitalize)
@@ -205,7 +204,7 @@ module RDoc
                           self << tr do
                             # Looped item rows
                             fields.each do |field|
-                              if field !~ /desc/ 
+                              if field !~ /desc/
                                 self << td('%' + field + '%', :class => field =~ /^old|^name/ ? "highlight" : "normal").if_exists
                               else
                                 self << td(('%' + field+ '%').if_exists)
@@ -216,9 +215,9 @@ module RDoc
                       end
                     end.if_exists(item)
                   end
-  
+
                   self << capture do
-                    h1('%type% %category% Methods')   
+                    h1('%type% %category% Methods')
                     self << capture do
                       self << a.small(:name => '%aref%') {br}.if_exists
                       div.method_block do
@@ -227,7 +226,7 @@ module RDoc
 
                         self << capture do
                           p.source_link :id => '%aref%-show-link' do
-                            a "Show source...", :id => '%aref%-link', :href => "#", 
+                            a "Show source...", :id => '%aref%-link', :href => "#",
                                :onclick=> "toggle('%aref%-source'); toggleText('%aref%-link'); return false;"
                           end
                           div.source :id => '%aref%-source' do
@@ -235,26 +234,26 @@ module RDoc
                             end
                           end.if_exists('sourcecode')
                         end
-  
-                    end.loop('methods').if_exists('methods')             
-                  end.loop('method_list').if_exists('method_list')             
-  
+
+                    end.loop('methods').if_exists('methods')
+                  end.loop('method_list').if_exists('method_list')
+
                 end.loop('sections').if_exists('sections')
-                
-              end            
-  
-              div.footer!.clear do 
+
+              end
+
+              div.footer!.clear do
                 self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
                 self << " / Allison 2 &copy; 2007-2009 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
-            end                                      
-          end          
-                
-        end.to_s                 
+            end
+          end
+
+        end.to_s
       end
 
-    Allison.constants.each do |c| 
+    Allison.constants.each do |c|
       eval "#{c} = Allison::#{c}" # Jump out of the namespace
       begin
         File.open("#{CACHE_DIR}/#{c}", 'w') do |f|
@@ -262,17 +261,18 @@ module RDoc
         end
       rescue Errno::EACCES => e
       end
-    end     
-    
+    end
+
     rescue LoadError => e
       # We don't have some dependency
       lib = (e.to_s[/(.*)\(/, 1] or e.to_s).split(" ").last.capitalize
       puts "Using cache (couldn't load '#{lib}')"
       Dir[CACHE_DIR + '/*'].each do |filename|
+        next if filename.include?(".")
         eval("#{filename.split("/").last} = File.open(filename) {|s| s.read}")
       end
     end
-      
-  end 
-  
-end 
+
+  end
+
+end
