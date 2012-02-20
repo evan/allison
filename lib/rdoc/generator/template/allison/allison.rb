@@ -244,7 +244,7 @@ module RDoc
 
               div.footer!.clear do
                 self << Time.now.strftime("Generated on %b %d, %Y").gsub(' 0', ' ')
-                self << " / Allison 2 &copy; 2007-2009 "
+                self << " / Allison 2 &copy; 2007-2012 "
                 a "Cloudburst, LLC", :href => "http://cloudbur.st"
               end
             end
